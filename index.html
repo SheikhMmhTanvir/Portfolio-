@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheikh Tanvir | Portfolio</title>
+    <link rel="icon" href="img/fav-img.png" type="image">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #64ffda; /* Teal Accent */
+            --bg-color: #0a192f; /* Deep Navy Background */
+            --card-bg: #112240; /* Lighter Navy */
+            --text-light: #e6f1ff;
+            --text-dim: #8892b0;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* --- ANIMATIONS --- */
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(10, 25, 47, 0.95);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 50px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+        }
+
+        .hero-text h3 { color: var(--primary-color); font-weight: normal; margin-bottom: 20px; font-size: 1.1rem; }
+        .hero-text h1 { font-size: 3.5rem; color: #ccd6f6; line-height: 1.1; font-weight: 800; }
+        .hero-text h2 { font-size: 2.5rem; color: var(--text-dim); margin-bottom: 20px; font-weight: 700; }
+        .hero-text p { max-width: 500px; color: var(--text-dim); font-size: 1.1rem; margin-bottom: 40px; }
+        
+        .hero-img-box {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.2);
+            filter: grayscale(20%);
+            transition: var(--transition);
+        }
+
+        .hero-img:hover { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 20px; }
+        .btn-primary { background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 15px 30px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-primary:hover { background: rgba(100, 255, 218, 0.1); transform: translateY(-3px); }
+        .btn-secondary { background: var(--primary-color); color: var(--bg-color); border: 1px solid var(--primary-color); padding: 15px 30px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-secondary:hover { opacity: 0.8; transform: translateY(-3px); }
+
+        /* --- SECTIONS GENERAL --- */
+        section { padding: 100px 50px; max-width: 1100px; margin: 0 auto; }
+        .section-title { font-size: 2rem; margin-bottom: 40px; display: flex; align-items: center; color: var(--text-light); }
+        .section-title::after { content: ""; display: block; width: 300px; height: 1px; background: #233554; margin-left: 20px; }
+
+        /* --- ABOUT SECTION STYLES --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .about-text p { margin-bottom: 15px; color: var(--text-dim); }
+
+        .about-pic-wrapper {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        /* The Square Frame Effect */
+        .about-pic-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .about-pic-wrapper:hover::after { top: 10px; left: 10px; }
+
+        .about-pic {
+            width: 100%;
+            border-radius: 5px;
+            filter: grayscale(100%);
+            transition: var(--transition);
+            display: block;
+            object-fit: cover;
+            background-color: #233554;
+        }
+
+        .about-pic-wrapper:hover .about-pic { filter: grayscale(0%); }
+
+        /* --- SKILLS --- */
+        .skill-category { margin-bottom: 25px; }
+        .skill-category h4 { color: var(--primary-color); margin-bottom: 10px; font-size: 1rem; }
+        .skills-list { display: flex; flex-wrap: wrap; gap: 12px; }
+        .skill-tag {
+            background: var(--card-bg); color: var(--text-dim); padding: 8px 15px; border-radius: 4px; font-size: 0.9rem; font-family: 'Consolas', monospace;
+            border-bottom: 2px solid transparent; transition: var(--transition);
+        }
+        .skill-tag:hover { color: var(--primary-color); background: rgba(17, 34, 64, 0.8); border-bottom: 2px solid var(--primary-color); transform: translateY(-2px); }
+
+        /* --- CARDS --- */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); padding: 30px; border-radius: 8px; transition: var(--transition); }
+        .card:hover { transform: translateY(-7px); box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7); }
+        .card h4 { color: var(--text-light); margin: 15px 0 10px; }
+        .card p { color: var(--text-dim); font-size: 0.9rem; }
+        .card i { color: var(--primary-color); font-size: 2rem; }
+
+        /* --- FOOTER --- */
+        .contact-section { text-align: center; max-width: 600px; margin: 0 auto; padding-bottom: 50px; }
+        footer { text-align: center; padding: 20px; color: var(--text-dim); font-size: 0.8rem; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .hero-img-box { order: -1; margin-bottom: 30px; }
+            .hero-img { width: 200px; height: 200px; }
+            .btn-group { justify-content: center; }
+            
+            .about-grid { grid-template-columns: 1fr; }
+            .about-pic-wrapper { margin-top: 40px; width: 70%; }
+            
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">SHEIKH TANVIR</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero hidden">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h3>Hi, my name is</h3>
+                <h1>Sheikh Tanvir.</h1>
+                <h2>I build backend systems.</h2>
+                <p>
+                    I am a Python/Django Developer and Competitive Programmer based in Chattogram. 
+                    I specialize in building secure, data-driven backend architectures.
+                </p>
+                <div class="btn-group">
+                    <a href="https://drive.google.com/file/d/1JeE81qHCjYzR1opu1jrylJFxRNXW9Rje/view?usp=sharing" class="btn-secondary" download>Resume</a>
+                    <a href="#contact" class="btn-primary">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-img-box">
+                <img src="img/img1.jpg" alt="Sheikh Tanvir" class="hero-img">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="hidden">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    Hello! My name is Tanvir and I enjoy solving problems through code. My journey started with a deep curiosity for how systems work, which quickly led me to 
+                    <span style="color:var(--primary-color)">Competitive Programming</span>. I love the thrill of optimizing algorithms and reducing time complexity.
+                </p>
+                <p>
+                    Fast-forward to today, and I’m building robust web applications. My main focus these days is building accessible, inclusive products and digital experiences for a variety of clients.
+                </p>
+                <p>
+                    I am also deeply interested in <span style="color:var(--primary-color)">Cybersecurity</span> and <span style="color:var(--primary-color)">Data Analysis</span>, ensuring that the systems I build are not only functional but also secure and data-intelligent.
+                </p>
+            </div>
+            
+            <div class="about-pic-wrapper">
+                <img src="img/img2.jpg" alt="Sheikh Tanvir Profile" class="about-pic">
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="hidden">
+        <h2 class="section-title">Technical Skills</h2>
+        
+        <div class="skill-category">
+            <h4><i class="fas fa-code"></i> Languages</h4>
+            <div class="skills-list">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">C++</span>
+                <span class="skill-tag">C</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Tailwind css</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h4><i class="fas fa-server"></i> Backend & Frameworks</h4>
+            <div class="skills-list">
+                <span class="skill-tag">Django</span>
+                <span class="skill-tag">Django REST Framework</span>
+                <span class="skill-tag">PostgreSQL</span>
+                <span class="skill-tag">FastAPI</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h4><i class="fas fa-tools"></i> Tools & Others</h4>
+            <div class="skills-list">
+                <span class="skill-tag">Git & GitHub</span>
+                <span class="skill-tag">Linux / Bash</span>
+                <span class="skill-tag">Cybersecurity Basics</span>
+                <span class="skill-tag">Data Analysis</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="hidden">
+        <h2 class="section-title">Education & Focus</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>IIUC</h4>
+                <p>International Islamic University Chittagong</p>
+                <p style="margin-top:5px; font-size:0.8rem; opacity:0.7;">Chattogram, Bangladesh</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-laptop-code"></i>
+                <h4>LeetCode</h4>
+                <p>Problem Solving & Algorithms</p>
+            </div>
+            
+            <div class="card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Focus</h4>
+                <p>Backend Engineering</p>
+                <p>Cybersecurity Enthusiast</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section hidden">
+        <h3 style="color:var(--primary-color)">What's Next?</h3>
+        <h2 style="font-size: 3rem; color:var(--text-light); margin-bottom: 20px;">Get In Touch</h2>
+        <p style="color:var(--text-dim); margin-bottom: 40px;">
+            I am currently open to new opportunities. Send me an email and I'll get back to you!
+        </p>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sktanvirbk@gmail.com" target="_blank" class="btn-primary">Say Hello</a>
+        
+        <div style="margin-top: 50px; display: flex; justify-content: center; gap: 25px;">
+            <a href="https://www.linkedin.com/in/sheikh-tanvir/" target="_blank" style="font-size: 1.5rem; color: var(--text-dim);"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/SheikhMmhTanvir" style="font-size: 1.5rem; color: var(--text-dim);"><i class="fab fa-github"></i></a>
+            <a href="#" style="font-size: 1.5rem; color: var(--text-dim);"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p style="margin-top: 20px; color: var(--text-dim);">+088 018 9044 5290</p>
+        <p style="margin-top: 20px; color: var(--text-dim);">sktanvirbk@gmail.com</p>
+    </section>
+
+    <footer>
+        <p>Built by Sheikh Tanvir</p>
+    </footer>
+
+    <script>
+ 
+    
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "instant" });
+        }, 10);
+    });
+
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add('show');
+            });
+        });
+        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
